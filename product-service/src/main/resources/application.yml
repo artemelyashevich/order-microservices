@@ -1,0 +1,18 @@
+spring:
+  application:
+    name: product-service
+  data:
+    mongodb:
+      host: 127.0.0.1
+      port: 27017
+      authentication-database: admin
+      database: orders
+      auto-index-creation: true
+
+server:
+  port: 8082
+
+application:
+  kafka:
+    server:
+      url: 127.0.0.1:9092
