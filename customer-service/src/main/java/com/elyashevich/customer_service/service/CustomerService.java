@@ -1,5 +1,6 @@
 package com.elyashevich.customer_service.service;
 
+import com.elyashevich.customer_service.domain.Order;
 import com.elyashevich.customer_service.domain.entity.Customer;
 
 import java.util.List;
@@ -15,4 +16,6 @@ public interface CustomerService {
     Customer update(String id, Customer customer);
 
     void delete(String id);
+
+    Customer order(Order order);
 }

@@ -8,6 +8,7 @@ import org.apache.kafka.common.serialization.StringSerializer;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.kafka.annotation.EnableKafka;
 import org.springframework.kafka.config.TopicBuilder;
 import org.springframework.kafka.core.DefaultKafkaProducerFactory;
 import org.springframework.kafka.core.KafkaTemplate;
@@ -18,6 +19,7 @@ import java.time.Duration;
 import java.util.HashMap;
 import java.util.Map;
 
+@EnableKafka
 @Configuration
 public class KafkaConfig {
 
@@ -27,7 +29,7 @@ public class KafkaConfig {
     @Bean
     public NewTopic productTopic() {
         return TopicBuilder
-                .name("product")
+                .name("customer")
                 .partitions(1)
                 .replicas(1)
                 .config(
@@ -43,7 +45,7 @@ public class KafkaConfig {
 
         config.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, this.kafkaServers);
         config.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
-        config.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, JsonSerializer.class);
+        config.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
 
         return new DefaultKafkaProducerFactory<>(config);
     }

@@ -27,9 +27,7 @@ public class MainController {
 
     @GetMapping
     public List<Product> getAll() {
-        final var products =  this.productService.getAll();
-        this.kafkaProducerService.sendMessage(products.get(0));
-         return products;
+         return this.productService.getAll();
     }
 
     @PostMapping

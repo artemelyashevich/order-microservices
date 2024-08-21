@@ -21,7 +21,7 @@ import java.util.Map;
 
 @EnableKafka
 @Configuration
-public class KafkaConfig {
+public class KafkaProducerConfig {
 
     @Value("${application.kafka.server.url}")
     private String kafkaServers;

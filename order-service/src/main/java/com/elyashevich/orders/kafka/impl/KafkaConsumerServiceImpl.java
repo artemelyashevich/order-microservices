@@ -3,6 +3,7 @@ package com.elyashevich.orders.kafka.impl;
 import com.elyashevich.orders.domain.Event;
 import com.elyashevich.orders.kafka.KafkaConsumerService;
 import com.elyashevich.orders.web.dto.CustomerDto;
+import com.elyashevich.orders.web.dto.OrderResponse;
 import com.elyashevich.orders.web.dto.ProductDto;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -26,18 +27,7 @@ public class KafkaConsumerServiceImpl implements KafkaConsumerService {
             groupId = "main_topic"
     )
     public void listen(ConsumerRecord<String, String> record) {
-        final var keys = gson.fromJson(record.key(), List.class);
-        Object data = null;
-        switch (keys.get(1).toString()) {
-            case ("PRODUCT"): {
-                data = gson.fromJson(record.value(), ProductDto.class);
-                break;
-            }
-            case ("CUSTOMER"): {
-                data = gson.fromJson(record.value(), CustomerDto.class);
-                break;
-            }
-        }
-        System.out.println(data);
+        final var data = gson.fromJson(record.value(), OrderResponse.class);
+        System.out.println("DATA FROM ORDER SERVICE --->" + data);
     }
 }

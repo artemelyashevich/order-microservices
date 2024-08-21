@@ -1,5 +1,6 @@
 package com.elyashevich.customer_service.service.impl;
 
+import com.elyashevich.customer_service.domain.Order;
 import com.elyashevich.customer_service.domain.entity.Customer;
 import com.elyashevich.customer_service.repository.CustomerRepository;
 import com.elyashevich.customer_service.service.CustomerService;
@@ -44,5 +45,10 @@ public class CustomerServiceImpl implements CustomerService {
     public void delete(String id) {
         final var customer = this.getById(id);
         this.customerRepository.delete(customer);
+    }
+
+    @Override
+    public Customer order(Order order) {
+        return this.getById(order.getCustomerId());
     }
 }

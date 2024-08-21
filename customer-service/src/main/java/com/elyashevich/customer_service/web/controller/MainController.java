@@ -1,6 +1,7 @@
 package com.elyashevich.customer_service.web.controller;
 
-import com.elyashevich.customer_service.domain.entity.Customer;
+import com.elyashevich.customer_service.domain.Event;
+import com.elyashevich.customer_service.domain.Order;
 import com.elyashevich.customer_service.kafka.KafkaProducerService;
 import com.elyashevich.customer_service.service.CustomerService;
 import com.elyashevich.customer_service.web.dto.CustomerDto;
@@ -42,7 +43,6 @@ public class MainController {
     @GetMapping("{id}")
     public CustomerDto getById(final @PathVariable("id") String id) {
         final var customer = this.customerService.getById(id);
-        this.kafkaProducerService.sendMessage(customer);
         return this.customerMapper.toDto(customer);
     }
 
@@ -60,4 +60,11 @@ public class MainController {
         this.customerService.delete(id);
     }
 
+    @PostMapping("order")
+    public void order(final @RequestBody Order order) {
+        final var customer = this.customerService.getById(order.getCustomerId());
+        order.setCustomer(this.customerMapper.toDto(customer));
+        order.setEvent(Event.CREATE_ORDER);
+        this.kafkaProducerService.sendMessage(order);
+    }
 }
